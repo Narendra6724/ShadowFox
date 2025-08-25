@@ -253,25 +253,11 @@ if selected_months and "MonthName" in df.columns:
 st.title("Delhi Air Quality Index (AQI) Explorer")
 st.caption("Analyze pollutants, seasonal variation, and geographic factors for Delhi.")
 
-kpi_cols = st.columns(4)
+kpi_cols = st.columns(2)  # only 2 KPIs now
 with kpi_cols[0]:
     st.metric("Rows", f"{len(df):,}")
 with kpi_cols[1]:
     st.metric("Date Range", f"{str(df['Date'].min().date()) if 'Date' in df else 'N/A'} → {str(df['Date'].max().date()) if 'Date' in df else 'N/A'}")
-with kpi_cols[2]:
-    aqi_col = None
-    for c in ["AQI","aqi"]:
-        if c in df.columns:
-            aqi_col = c; break
-    if aqi_col:
-        st.metric("Mean AQI", f"{df[aqi_col].dropna().mean():.1f}")
-    else:
-        st.metric("Mean AQI", "N/A")
-with kpi_cols[3]:
-    if aqi_col:
-        st.metric("Max AQI", f"{df[aqi_col].dropna().max():.0f}")
-    else:
-        st.metric("Max AQI", "N/A")
 
 st.markdown("---")
 
@@ -450,4 +436,5 @@ st.markdown("""
 -> Use the left sidebar to upload a new CSV, choose months, and select pollutants.
 ->The NLP panel (left) becomes active when you pick a text column (e.g., remarks/comments).
 -> Charts are built with Matplotlib/Seaborn; feel free to customize styles.
+
 """)
